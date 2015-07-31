@@ -1,0 +1,38 @@
+{
+  // Required
+  "manifest_version": 2,
+  "name": "Listen Together",
+  "version": "0.0.1",
+
+  // Recommended
+  "description": "Listen to the same media as your friends",
+  "icons": {
+
+    },
+
+  // Pick one (or none)
+  "browser_action": {
+    "default_popup": "popup/popup.html"
+  },
+
+  "background" : {
+    "scripts" : ["background/background.bundle.js"],
+    "persistent": false
+    },
+
+  //Interacts with tabs that currently have audio playing
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.youtube.com/*",
+        "https://www.youtube.com/*"
+        ],
+      "js": ["content/content.bundle.js"]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
+
+}

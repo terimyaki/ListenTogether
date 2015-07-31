@@ -1,0 +1,1 @@
+//This will be the event page that will be the meditator between content scripts and popup script. It will handle events. Using RxJs here.

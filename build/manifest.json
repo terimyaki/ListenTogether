@@ -5,7 +5,6 @@
   "version": "0.0.1",
 
   // Recommended
-  "default_locale": "en",
   "description": "Listen to the same media as your friends",
   "icons": {
 
@@ -16,15 +15,24 @@
     "default_popup": "popup/popup.html"
   },
 
+  "background" : {
+    "scripts" : ["background/background.bundle.js"],
+    "persistent": false
+    },
+
   //Interacts with tabs that currently have audio playing
   "content_scripts": [
     {
-      "matches": ["http://www.youtube.com/*"],
-      "js": ["content/content.js"]
+      "matches": [
+        "http://www.youtube.com/*",
+        "https://www.youtube.com/*"
+        ],
+      "js": ["content/content.bundle.js"]
     }
   ],
   "permissions": [
-    "tabs"
+    "tabs",
+    "storage"
   ]
 
 }
