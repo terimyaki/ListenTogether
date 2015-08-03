@@ -66,6 +66,9 @@ const backgroundConfig = merge({}, config, {
 	output : {
 		path: path.join(__dirname, 'build', 'background'),
 		filename : 'background.bundle.js'
+	},
+	extensions: {
+		'rx': 'rx'
 	}
 });
 

@@ -8,10 +8,10 @@ class App extends React.Component {
 		};
 	}
 	componentDidMount(){
-		var self = this;
-		chrome.storage.sync.get(function(data){
-			self.setState(data);
-		});
+		// var self = this;
+		// chrome.storage.sync.get(function(data){
+		// 	if (data) self.setState(data);
+		// });
 	}
 	componentWillMount() {
 		let self = this;
