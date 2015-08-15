@@ -98,17 +98,24 @@
 					return this.selector;
 				}
 			}, {
-				key: 'attachListeners',
-				value: function attachListeners() {
+				key: 'attachMediaListeners',
+				value: function attachMediaListeners() {
 					var self = this;
-					if (this.selector) {
-						console.log('in selector', this.selector);
+					if (this.haveMediaPlayer()) {
+						console.log('in selector', this.selector, self.port);
 						this.selector.on('playing', alertVideoStatusChange(self.port));
 						this.selector.on('pause', alertVideoStatusChange(self.port));
 						//this doesnt work
 						this.selector.get(0).pause();
 						this.selector.get(0).play();
 					}
+				}
+			}, {
+				key: 'attachBackgroundListeners',
+				value: function attachBackgroundListeners() {
+					runtime.onMessageExternal.addListener(function (request, sender, sendResponse) {
+						console.log('i got a message', [].slice.call(arguments, 0));
+					});
 				}
 
 				//If there is a media initiate a connection
@@ -127,12 +134,12 @@
 				value: function init() {
 					var self = this;
 					runtime.sendMessage({ status: 'complete' }, function (response) {
-						console.log('this is the response', response);
 						if (response && response.selector) {
 							self.selector = response.selector;
 							self.observeMediaPlayer();
-							self.attachListeners();
+							self.attachMediaListeners();
 						}
+						attachBackgroundListeners();
 						return self;
 					});
 				}

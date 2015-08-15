@@ -32,16 +32,21 @@ import $ from 'jquery';
 		mediaIsPlaying(){
 			return this.selector;
 		}
-		attachListeners(){
+		attachMediaListeners(){
 			var self = this;
-			if(this.selector){
-				console.log('in selector', this.selector);
+			if(this.haveMediaPlayer()){
+				console.log('in selector', this.selector, self.port);
 				this.selector.on('playing', alertVideoStatusChange(self.port));
 				this.selector.on('pause', alertVideoStatusChange(self.port));
 				//this doesnt work
 				this.selector.get(0).pause();
 				this.selector.get(0).play();
 			}
+		}
+		attachBackgroundListeners(){
+			runtime.onMessageExternal.addListener(function(request, sender, sendResponse){
+				console.log('i got a message', [].slice.call(arguments, 0));
+			});
 		}
 		//If there is a media initiate a connection
 		observeMediaPlayer(){
@@ -55,12 +60,12 @@ import $ from 'jquery';
 		init(){
 			let self = this;
 			runtime.sendMessage({status : 'complete'}, (response) => {
-				console.log('this is the response', response);
 				if(response && response.selector){
 					self.selector = response.selector;
 					self.observeMediaPlayer();
-					self.attachListeners();
+					self.attachMediaListeners();
 				}
+				attachBackgroundListeners();
 				return self;
 			});
 		}
